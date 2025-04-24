@@ -4,3 +4,13 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
+chrono = "0.4.40"
+regex = "1.11.1"
+
+[[bin]]
+name = "todo"
+path = "src/main.rs"
+
+[lib]
+name = "todo"
+path = "src/lib.rs"
