@@ -1,5 +1,5 @@
 use std::env;
-// use todo::{Task, Priority, TaskStatus};
+use todo::{Command, CommandFlags};
 
 fn show_menu() {
     println!("RobCo Assistant");
@@ -15,6 +15,14 @@ fn main() {
     let args: Vec<String> = env::args().collect();
     if args.len() > 1 {
         println!("Your command line arguments are: {:?}", args);
+        let command = CommandFlags::parse(&args);
+        println!("Command: {:?}", command);
+
+        if command.execute(&args) {
+            println!("Command executed successfully");
+        } else {
+            println!("Command execution failed");
+        }
         return;
     }
 

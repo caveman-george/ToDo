@@ -11,6 +11,7 @@ macro_rules! impl_setters {
     };
 }
 
+#[derive(Debug)]
 pub struct TaskBuilder {
     id: Option<u32>,
     title: Option<String>,

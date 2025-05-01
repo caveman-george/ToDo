@@ -1,8 +1,9 @@
 use chrono::TimeDelta;
 use chrono::prelude::*;
 use regex::Regex;
+use todo::Command;
 use todo::estimate_due_datetime;
-use todo::{CliCommand, Priority, TaskBuilder, TaskStatus};
+use todo::{CommandFlags, Priority, TaskBuilder, TaskStatus};
 
 #[test]
 fn test_duration_regex() {
@@ -87,10 +88,17 @@ fn test_cli_command() {
         "Bring Snacks".to_string(),
     ];
 
-    // let command = CliCommand::from(args);
-    // assert!(matches!(command, CliCommand::NewTask { .. }));
-    let bad_command = CliCommand::from(bad_args);
-    assert!(matches!(bad_command, None));
+    let command = CommandFlags::parse(&args);
+    assert!(matches!(command, CommandFlags::NewTask { .. }));
+
+    let result = std::panic::catch_unwind(|| {
+        CommandFlags::parse(&bad_args);
+    });
+
+    assert!(
+        result.is_err(),
+        "Expected CommandFlags::parse to panic with invalid arguments"
+    );
 }
 
 #[test]
